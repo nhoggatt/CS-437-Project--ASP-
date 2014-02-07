@@ -1,0 +1,6 @@
+c:\users\neil\documents\visual studio 2013\Projects\CS 437 - SC\CS 437 - SC\bin\Debug\CS 437 - SC.exe.config
+c:\users\neil\documents\visual studio 2013\Projects\CS 437 - SC\CS 437 - SC\obj\Debug\CS 437 - SC.csprojResolveAssemblyReference.cache
+c:\users\neil\documents\visual studio 2013\Projects\CS 437 - SC\CS 437 - SC\bin\Debug\CS 437 - SC.exe
+c:\users\neil\documents\visual studio 2013\Projects\CS 437 - SC\CS 437 - SC\bin\Debug\CS 437 - SC.pdb
+c:\users\neil\documents\visual studio 2013\Projects\CS 437 - SC\CS 437 - SC\obj\Debug\CS 437 - SC.exe
+c:\users\neil\documents\visual studio 2013\Projects\CS 437 - SC\CS 437 - SC\obj\Debug\CS 437 - SC.pdb
