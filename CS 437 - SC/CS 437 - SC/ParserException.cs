@@ -4,17 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CS_437
+namespace ASP
 {
-    class ParserException : Exception
+    namespace SystemControl
     {
-        public string CommandName;
-        public string Description;
-
-        public ParserException(string commandName, string description)
+        class ParserException : Exception
         {
-            CommandName = commandName;
-            Description = description;
+            public string CommandName;
+            public string Description;
+
+            public ParserException(string commandName, string description)
+            {
+                CommandName = commandName;
+                Description = description;
+            }
         }
     }
 }
