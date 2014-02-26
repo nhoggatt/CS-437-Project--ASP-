@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ASP.General;
 
 
 namespace ASP
@@ -16,17 +17,22 @@ namespace ASP
 
             static void Main(string[] args)
             {
-                QueueCommand("nav waypoint list");
-                
-
-                int i = 0;
-
                 while (true)
                 {
-                    if (unexecutedCommands.Count() > 0)
+                    string temp = Console.ReadLine();
+                    QueueCommand(temp);
+
+
+                    int i = 0;
+
+
+                    while (unexecutedCommands.Count() > 0)
                     {
+                        
+
                         try
                         {
+                           
                             string command = unexecutedCommands.Dequeue();
                             Parser.InterpretCommand(command);
                         }
@@ -39,6 +45,7 @@ namespace ASP
                             Console.Error.WriteLine();
                         };
                     }
+
                 }
                 /* Define behavior loop here
                  * 

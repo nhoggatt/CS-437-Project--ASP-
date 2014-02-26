@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ASP.General;
 
 
 namespace ASP
@@ -40,6 +41,7 @@ namespace ASP
 
             private static void Print(string args)
             {
+                
                 if (args == "")
                     throw new ParserException("Print", "Attempted to print nothing.");
                 System.Console.WriteLine(args);
@@ -68,21 +70,29 @@ namespace ASP
                 {
                     if (argsToArray.Length == 2 && argsToArray[1] == "list")
                     {
-                        foreach(Waypoint way in ASP.SystemControl.Driver.storedWaypoints.ListWaypoints())
-                            Console.WriteLine(way.getX() + " " + way.getY() + " " + way.getZ());
+                        
+                    for (int i = 0; i < Driver.storedWaypoints.ListWaypoints().Count; i++)
+                        {
+                            Waypoint way = Driver.storedWaypoints.ListWaypoints()[i];
+                            Console.WriteLine(i+" "+way.getX() + " " + way.getY() + " " + way.getZ() + " " + way.getRadius());
+                        }
                     }
-                    else if ((argsToArray.Length - 2) % 2 == 0 && argsToArray[1] == "add")
+                    else if ((argsToArray.Length - 2) % 4 == 0 && argsToArray[1] == "add")
                     {
-                        for(int i = 0; )
-                        ASP.SystemControl.Driver.storedWaypoints.AddWaypoint(double x, double y, double z, double radius);
+                        for (int i = 2; i < (argsToArray.Length); i += 4)
+                            Driver.storedWaypoints.AddWaypoint(Double.Parse(argsToArray[i]), Double.Parse(argsToArray[i + 1]),
+                                Double.Parse(argsToArray[i + 2]), Double.Parse(argsToArray[i + 3]));
                     }
                     else if (argsToArray.Length > 2 && argsToArray[1] == "remove")
                     {
-
+                        for (int i = 2; i < (argsToArray.Length); i++)
+                            Driver.storedWaypoints.RemoveWaypoint((Int32.Parse(argsToArray[i])));
                     }
                     else if ((argsToArray.Length - 2) % 3 == 0 && argsToArray[1] == "update")
                     {
-
+                        for (int i = 2; i < (argsToArray.Length ); i += 5)
+                            Driver.storedWaypoints.UpdateWaypoint(Int32.Parse(argsToArray[i]), Double.Parse(argsToArray[i + 1]),
+                                Double.Parse(argsToArray[i + 2]), Double.Parse(argsToArray[i + 3]), Double.Parse(argsToArray[i + 4]));
                     }
 
                 }

@@ -7,19 +7,25 @@ using ASP.General;
 
 namespace ASP {
 
-    public class StatusReport : AbstractReport
+    public class MaintenanceReport : AbstractReport
     {
-
         public override void Send()
         {
             throw new NotImplementedException();
         }
 
 
+        public MaintenanceReport(){
+
+            //Calls diagnostic function to check on modules/components. If a module returns as broken, will update status in SC. If a module is already not functioning, it will not bother to check up on the module. 
+            //NOTE: the user should be able to set the status of a module/hardware component, and that should be the only way to change a part's status after it has been confirmed broken.
+
+        }
+       
+
         /*
          * 3) [Short Report] send locational data + time to IC to transmit 
-         *      float[3] 
-         *      long
+         *      LocationTime
          *     OR
          *    [Long Report]
          *      i) Recieve information from environment module              
@@ -29,9 +35,6 @@ namespace ASP {
          *      
          *     environmentaldata (each report )
          *      -waypoint int
-         *      -x double
-         *      -y double
-         *      -z double
          *      -pressure double 
          *      -temp double
          *      -radiation double
@@ -41,18 +44,17 @@ namespace ASP {
          *      +bool contaminant
          *      +int threatLevel
          *      +double concentration
-         *     double[3]
-         *     long
+         *     Waypoint position
+         *     LocationTime
          *          
          *     [Maintenance Report] 
          *     i) Compile status of modules (if functioning)
          *     ii) Power levels
-         *     iii) [Long Report]
-         *     iv) Send to IC for transmission 
+         *     iii) Send to IC for transmission 
          *     
          *     [Long Report]
-         *     double[?]
-         *     bool[] functioning
+         *     double[n] power levels
+         *     bool[n] functioning
          *      broken hardware or non functioning modules
          *     
          *     Each report type shall be seperate.

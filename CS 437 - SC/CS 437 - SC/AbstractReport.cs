@@ -7,13 +7,16 @@ using ASP.General;
 
 namespace ASP {
 
-    public class StatusReport : AbstractReport
+   public abstract class AbstractReport
     {
+        LocationTime current;
 
-        public override void Send()
+        public AbstractReport()
         {
-            throw new NotImplementedException();
+            current = new LocationTime(new LocationGenerator().Location());
         }
+
+        public abstract void Send();
 
 
         /*

@@ -7,7 +7,7 @@ using ASP.General;
 
 namespace ASP {
 
-    public class EnvironmentalReport: StatusReport
+    public class EnvironmentalReport : AbstractReport
     {
 
         private List<EnvironmentalData> envData = new List<EnvironmentalData>();
@@ -23,6 +23,15 @@ namespace ASP {
             envData.Add(data);
         }
 
+        public override void Send()
+        {
+            throw new NotImplementedException();
+        }
+      
+
+       
+       
+
         /*
          * 3) [Short Report] send locational data + time to IC to transmit 
          *      LocationTime
@@ -35,9 +44,6 @@ namespace ASP {
          *      
          *     environmentaldata (each report )
          *      -waypoint int
-         *      -x double
-         *      -y double
-         *      -z double
          *      -pressure double 
          *      -temp double
          *      -radiation double

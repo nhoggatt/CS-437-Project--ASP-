@@ -11,6 +11,7 @@ namespace ASP
     {
 
         Material[] materials;
+        double conductivity;
         double pressure;
         double temperature;
         double radiationLevel;
@@ -25,14 +26,15 @@ namespace ASP
         //envdata complete <final info>
 
         public EnvironmentalData(double pressure, double temperature, double radiationLevel,
-            double lightIntensity, int waypoint, double[] coords, Material[] materials)
+            double lightIntensity, int waypoint, double conductivity, Waypoint coords, Material[] materials)
         {
+            this.conductivity = conductivity;
             this.pressure = pressure;
             this.temperature = temperature;
             this.radiationLevel = radiationLevel;
             this.lightIntensity = lightIntensity;
             this.waypoint = waypoint;
-            this.locationTime = new LocationTime(new Vector3(coords[0], coords[1], coords[2]));
+            this.locationTime = new LocationTime(coords.getVector3());
             this.materials = materials;
         }
 

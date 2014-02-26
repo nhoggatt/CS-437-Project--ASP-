@@ -41,8 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MaintenanceReport.cs" />
     <Compile Include="LocationGenerator.cs" />
     <Compile Include="EnvironmentalReport.cs" />
+    <Compile Include="AbstractReport.cs" />
     <Compile Include="Vector3.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="Material.cs" />
