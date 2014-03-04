@@ -32,6 +32,12 @@ namespace ASP
                 waypoints.RemoveAt(id);
             }
 
+            public int GetId(Waypoint way)
+            {
+                return waypoints.FindIndex(x => x.getX() == way.getX() && x.getY() == way.getY() && x.getZ() == way.getZ()
+                    && x.getRadius() == way.getRadius());
+            }
+
             public void UpdateWaypoint(int id, double x, double y, double z, double radius)
             {
                 waypoints[id] = new Waypoint(x, y, z, radius);

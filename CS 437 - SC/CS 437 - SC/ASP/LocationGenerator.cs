@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using ASP.General;
 using System.Linq;
 using System.Text;
@@ -19,7 +19,7 @@ namespace ASP
 
         public Vector3 Location()
         {
-            return new Vector3(x,y,z);
+            return new Vector3(x, y, z);
         }
     }
 }

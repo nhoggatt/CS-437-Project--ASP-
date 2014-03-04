@@ -9,4 +9,3 @@ C:\Users\Neil\Documents\GitHub\CS-437-Project--ASP-\CS 437 - SC\CS 437 - SC\bin\
 C:\Users\Neil\Documents\GitHub\CS-437-Project--ASP-\CS 437 - SC\CS 437 - SC\bin\Debug\CS 437 - SC.pdb
 C:\Users\Neil\Documents\GitHub\CS-437-Project--ASP-\CS 437 - SC\CS 437 - SC\obj\Debug\CS 437 - SC.exe
 C:\Users\Neil\Documents\GitHub\CS-437-Project--ASP-\CS 437 - SC\CS 437 - SC\obj\Debug\CS 437 - SC.pdb
-C:\Users\Neil\Documents\GitHub\CS-437-Project--ASP-\CS 437 - SC\CS 437 - SC\obj\Debug\CS 437 - SC.csprojResolveAssemblyReference.cache

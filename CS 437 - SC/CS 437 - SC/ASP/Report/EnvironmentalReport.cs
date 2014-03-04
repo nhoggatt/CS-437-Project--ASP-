@@ -6,23 +6,32 @@ using System.Threading.Tasks;
 using ASP.General;
 
 namespace ASP {
-
-   public abstract class AbstractReport
-    {
-        LocationTime current;
-
-        public AbstractReport()
+    namespace Report {
+        public class EnvironmentalReport : AbstractReport
         {
-            current = new LocationTime(new LocationGenerator().Location());
+
+            private List<EnvironmentalData> envData = new List<EnvironmentalData>();
+
+            public EnvironmentalReport(EnvironmentalData data)
+            {
+                Add(data);
+            }
+
+            public void Add(EnvironmentalData data)
+            {
+
+                envData.Add(data);
+            }
+
+
         }
 
-        public abstract void Send();
-
+       
+       
 
         /*
          * 3) [Short Report] send locational data + time to IC to transmit 
-         *      float[3] 
-         *      long
+         *      LocationTime
          *     OR
          *    [Long Report]
          *      i) Recieve information from environment module              
@@ -32,9 +41,6 @@ namespace ASP {
          *      
          *     environmentaldata (each report )
          *      -waypoint int
-         *      -x double
-         *      -y double
-         *      -z double
          *      -pressure double 
          *      -temp double
          *      -radiation double
@@ -44,18 +50,17 @@ namespace ASP {
          *      +bool contaminant
          *      +int threatLevel
          *      +double concentration
-         *     double[3]
-         *     long
+         *     Waypoint position
+         *     LocationTime
          *          
          *     [Maintenance Report] 
          *     i) Compile status of modules (if functioning)
          *     ii) Power levels
-         *     iii) [Long Report]
-         *     iv) Send to IC for transmission 
+         *     iii) Send to IC for transmission 
          *     
          *     [Long Report]
-         *     double[?]
-         *     bool[] functioning
+         *     double[n] power levels
+         *     bool[n] functioning
          *      broken hardware or non functioning modules
          *     
          *     Each report type shall be seperate.

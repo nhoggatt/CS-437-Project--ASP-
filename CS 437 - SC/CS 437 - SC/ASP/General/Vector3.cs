@@ -37,6 +37,11 @@ namespace ASP
                 this.z = z;
             }
 
+            public double Magnitude(Vector3 other)
+            {
+                return Math.Sqrt(Math.Pow(x - other.x, 2) + Math.Pow(y - other.y, 2) + Math.Pow(z - other.z, 2));
+            }
+
         }
     }
 }

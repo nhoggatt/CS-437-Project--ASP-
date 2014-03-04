@@ -6,6 +6,7 @@ namespace ASP {
     namespace General{
 public class Waypoint
 {
+    private int id;
     private double radius;
     private Vector3 coords;
 
@@ -27,6 +28,13 @@ public class Waypoint
     {
         return coords;
     }
+
+    public int getId()
+    {
+        return id;
+    }
+
+
     public double getX (){
         return coords.X;
     }
@@ -44,6 +52,11 @@ public class Waypoint
     public double getRadius()
     {
         return radius;
+    }
+
+    public void setId(int id)
+    {
+        this.id= id;
     }
     public void setX(double x)
     {

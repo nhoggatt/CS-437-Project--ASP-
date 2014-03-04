@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ASP.General;
+using ASP.Report;
 
 
 namespace ASP
@@ -18,7 +19,9 @@ namespace ASP
 
           { "kill", new Command(Kill)},
           { "print", new Command(Print)},
-          { "nav", new Command(Nav)}
+          { "nav", new Command(Nav)},
+          { "envdata", new Command(Envdata)},
+          { "report", new Command(Report)}
 
        };
 
@@ -53,17 +56,18 @@ namespace ASP
                 string[] argsToArray = args.Split(' ');
                 if (argsToArray.Length == 1 && argsToArray[0] == "status")
                 {
-
+                    Console.WriteLine("Current Location: "+Driver.locationTime.TimeLocation.Location);
+                    Console.WriteLine("Current Destination: " + Driver.storedStandard.pathfinding.Goal);
                 }
                 else if (argsToArray.Length > 1 && argsToArray[0] == "control")
                 {
-                    if (argsToArray.Length == 2 && argsToArray[0] == "move")
+                    if (argsToArray.Length == 2 && argsToArray[1] == "move")
                     {
-
+                        Driver.Move();
                     }
                     else if (argsToArray.Length == 2 && argsToArray[1] == "stop")
                     {
-
+                        Driver.Stop();
                     }
                 }
                 else if (argsToArray.Length > 1 && argsToArray[0] == "waypoint")
@@ -102,11 +106,39 @@ namespace ASP
             }
             private static void Report(string args)
             {
-                Environment.Exit(0);
+                string[] argsToArray = args.Split(' ');
+                if (argsToArray.Length == 3 && argsToArray[0] == "frequency")
+                {
+                    Driver.ContaminantUpdate(new Material(Int32.Parse(argsToArray[1]),
+                         argsToArray[2] == "true",
+                         Int32.Parse(argsToArray[3]),
+                         Double.Parse(argsToArray[4])));
+                }
+                else if (argsToArray.Length == 2 && argsToArray[0] == "send")
+                {
+                    Driver.scheduler.EnvironmentalDataLifetime = (Int64.Parse(argsToArray[1]));
+                }
             }
             private static void Envdata(string args)
             {
-                Environment.Exit(0);
+                
+                string[] argsToArray = args.Split(' ');
+                if (argsToArray.Length == 5 && argsToArray[0] == "contaminant")
+                {
+                   Driver.ContaminantUpdate( new Material(Int32.Parse(argsToArray[1]),
+                        argsToArray[2] == "true",
+                        Int32.Parse(argsToArray[3]),
+                        Double.Parse(argsToArray[4])));
+                }
+                else if (argsToArray.Length == 2 && argsToArray[0] == "lifetime")
+                {
+                   Driver.scheduler.EnvironmentalDataLifetime = (Int64.Parse(argsToArray[1]));
+                }
+              
+
+
+
+            
             }
             private static void Shutdown(string args)
             {
