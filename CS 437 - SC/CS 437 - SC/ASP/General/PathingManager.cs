@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ASP.General;
+using ASP.SystemControl;
 
 namespace ASP
 {
@@ -31,25 +32,16 @@ namespace ASP
              * Rinse and repeat.
              */
 
-            private Grid map;
-               
             private Vector3 currentDestination;
             private Waypoint goal;
-            private Waypoint lastWaypoint;
 
 
-            WaypointManager currentPath = new WaypointManager();
 
 
             public PathingManager()
             {
-                map = new Grid();
             }
 
-            public PathingManager(double [,] lowerBound, double[,] upperBound, Vector3[,] obstructions)
-            {
-                 map = new Grid(lowerBound, upperBound,obstructions);
-            }
 
             public Waypoint Goal
             {
@@ -62,10 +54,12 @@ namespace ASP
 
                 get { return currentDestination; }
             }
-
+ 
             private void CalculatePath(Waypoint destination)
             {
 
+                Console.WriteLine("DRIVER:STANDARD:PATHINGMANAGER Next waypoint is: " + (destination==null ? -1 : destination.getId()));
+              
             }
             
             public void Refresh(){

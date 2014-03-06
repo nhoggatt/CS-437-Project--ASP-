@@ -14,6 +14,11 @@ namespace ASP
 
             DiagnosticData data;
 
+            public DiagnosticData Data
+            {
+                get { return data; }
+            }
+
             public MaintenanceReport()
             {
 

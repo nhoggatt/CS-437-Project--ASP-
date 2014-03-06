@@ -37,7 +37,8 @@ namespace ASP
             {
                 dateTime = DateTime.Now;
                 this.location=location;
-                this.waypoint_id = Driver.CurrentWaypoint().getId();
+
+                this.waypoint_id = Driver.storedStandard.pathfinding.Goal.getId();
             }
 
 

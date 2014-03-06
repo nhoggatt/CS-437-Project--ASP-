@@ -12,11 +12,17 @@ namespace ASP
         public class ObstructionReport : AbstractReport
         {
 
-            public ObstructionReport()
+            private ObstructionData data;
+
+            public ObstructionData Data
             {
-
+                get { return data; }
             }
-
+          
+            public ObstructionReport(ObstructionData data)
+            {
+                this.data = data;
+            }
 
         }
 

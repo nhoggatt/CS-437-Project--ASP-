@@ -12,8 +12,18 @@ namespace ASP
     {
         public class DiagnosticData
         {
-            Component[] status;
-            double power;
+            private Component[] status;
+            private double power;
+
+
+            public double Power
+            {
+                get { return power; }
+            }
+            public Component[] Status
+            {
+                get { return status; }
+            }
 
             public DiagnosticData()
             {

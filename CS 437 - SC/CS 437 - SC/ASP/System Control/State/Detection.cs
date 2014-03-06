@@ -32,14 +32,7 @@ namespace ASP
                         {
                             currentContaminant = mat;
                         }
-                        else if (!recentContaminants.Contains(mat.Id))
-                        {
-                            if (currentContaminant.ThreatLevel < mat.ThreatLevel)
-                            {
-                                currentContaminant = mat;
-                            }
 
-                        }
                         else if (mat.Id == currentContaminant.Id)
                         {
                             if (mat.Concentration > currentContaminant.Concentration)
@@ -50,6 +43,19 @@ namespace ASP
                                 Console.WriteLine("DRIVER:DETECTION Area with higher concentration of contaminant detected.");
                             }
                         }
+                        else if (!recentContaminants.Contains(mat.Id))
+                        {
+                            if (currentContaminant.ThreatLevel < mat.ThreatLevel)
+                            {
+                                currentContaminant = mat;
+                                Console.WriteLine("DRIVER:DETECTION Contaminant with higher threat detected.");
+                                newPosition = true;
+
+                            }
+                            
+
+                        }
+                        
 
                         Driver.CheckState();
                     }
@@ -61,9 +67,16 @@ namespace ASP
                     {
                         newPosition = false;
                         currentCyclePosition = Driver.locationTime.TimeLocation.Location;
-                        Console.WriteLine("DRIVER:DETECTION -> MNM Circle around current location. ");
+                        Console.WriteLine("DRIVER:DETECTION -> MNM Circle around new location. ");
                     }
 
+                    if (new Random().Next(250) == 1) // To simulate the time it may take to search for contaminant.
+                    {
+                        Console.WriteLine("DRIVER:Detection Examination complete. Sending report...");
+                        Driver.report.AddToEnvironmentalReportData(new EnvironmentalData(Driver.storedStandard.pathfinding.Goal, currentContaminant));
+                        Driver.report.reports["environmental"]();
+                        DoneSearching();
+                    }
                     /*
                      * Nothing occurs until 
                      * A) New cycle position. Need to reinform MNM.
@@ -113,7 +126,6 @@ namespace ASP
                 override public void Stop()
                 {
                     currentCyclePosition = null;
-                    Driver.CheckState();
                 }
 
                 //Called when reaching a new waypoint.

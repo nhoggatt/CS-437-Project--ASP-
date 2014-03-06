@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ASP\CurrentLocation.cs" />
-    <Compile Include="ASP\General\Grid.cs" />
     <Compile Include="ASP\General\PathingManager.cs" />
     <Compile Include="ASP\LocationGenerator.cs" />
     <Compile Include="ASP\Report\DiagnosticData.cs" />
@@ -67,6 +66,7 @@
     <Compile Include="ASP\General\LocationTime.cs" />
     <Compile Include="ASP\Report\StatusReport.cs" />
     <Compile Include="ASP\System Control\SCDriver.cs" />
+    <Compile Include="ASP\Test\DataGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ASP\General\WaypointManager.cs" />
     <Compile Include="ASP\General\Waypoint.cs" />

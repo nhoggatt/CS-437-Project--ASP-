@@ -20,7 +20,7 @@ namespace ASP
 
             public AbstractReport()
             {
-                current = new LocationTime(new LocationGenerator().Location());
+                current = new LocationTime(ASP.SystemControl.Driver.locationTime.TimeLocation.Location);
             }
 
 

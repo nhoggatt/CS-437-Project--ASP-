@@ -40,16 +40,20 @@ namespace ASP
                         if (pathingTo)
                         {
 
-                            if (InRange(lastPosition,pathfinding.Goal))
+                            if (InRange(lastPosition, pathfinding.Goal))
                             {
 
                                 Console.WriteLine("DRIVER:STANDARD Reached Goal Waypoint");
                                 pathingTo = false;
-                                
+
                                 explore(pathfinding.Goal);
                             }
                         }
-                       
+                        else if (new Random().Next(1000) == 1) // To simulate the time it may take to analyze an obstruction.
+                        {
+                            DoneExploring();
+                        }
+
                     }
                     else
                     {
@@ -72,6 +76,7 @@ namespace ASP
                 }
 
                 public void DoneExploring(){
+                    Console.WriteLine("DRIVER:STANDARD Done Exploring Waypoint: " + pathfinding.Goal.getId());
                     pathingTo = true;
                     nextGoal();
                     
@@ -83,7 +88,7 @@ namespace ASP
 
                     if (temp.Count == 0)
                     {
-                        Console.WriteLine("DRIVER:STANDARD:Error No waypoints.");
+                        Console.Error.WriteLine("DRIVER:STANDARD:Error No waypoints.");
                     }
                     else
                     {
@@ -97,7 +102,6 @@ namespace ASP
                         {
                             pathfinding.Goal = temp[position + 1];
                         }
-                        Console.WriteLine("DRIVER:STANDARD Next waypoint is: "+pathfinding.Goal);
                     }
                 }
 
@@ -122,6 +126,9 @@ namespace ASP
 
                 override public void Start()
                 {
+                    
+                    Console.WriteLine(Driver.storedWaypoints.ListWaypoints().Count);
+
                     if (pathfinding == null)
                     {
                         pathfinding = new PathingManager();
@@ -130,6 +137,7 @@ namespace ASP
                     {
                         nextGoal();
                     }
+                    pathingTo = true;
 
                 }
 

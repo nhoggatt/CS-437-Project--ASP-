@@ -14,6 +14,7 @@ namespace ASP
 
         public CurrentLocationTime(double x, double y, double z)
         {
+            Console.WriteLine("TEST Current location x: " + x + " y: " + y + " z: " + z);
             location = new Vector3(x,y,z);
         }
 
@@ -26,6 +27,7 @@ namespace ASP
     }
         public void UpdatePosition(double x, double y, double z)
         {
+            Console.WriteLine("TEST Current location x: " + x + " y: " + y + " z: " + z);
             location.X += x;
             location.Y += y;
             location.Z += z;

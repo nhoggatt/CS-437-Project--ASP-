@@ -20,7 +20,7 @@ namespace ASP
             public static Scheduler scheduler;
             public static ReportManager report;
 
-            private enum StateType {Idle, Standard, Obstruction, Detection, None};
+            private enum StateType { Idle, Standard, Obstruction, Detection, None };
             private static StateType currentStateType;
             private static StateType nextStateType;
             private static StateType forcedState = StateType.None;
@@ -37,53 +37,61 @@ namespace ASP
 
             public static WaypointManager storedWaypoints = new WaypointManager();
 
-            public static Dictionary<int,Component> components = new Dictionary<int,Component>()
+            public static Dictionary<int, Component> components = new Dictionary<int, Component>() 
             {
             {0, new Component(0)}, //ER
             {1, new Component(1)}, //IC
-            {2, new Component(2, false)}, //MNM
-            {3, new Component(3, false)}, // Temp Sensor
+            {2, new Component(2)}, //IC
+            {3, new Component(3, false)}, // Temperature Sensor
             {4, new Component(4)} // Motor 
             };
 
             public Driver()
             {
-                
+
+                //TestData
+                components.Add(5, new Component(5, true, new List<Component>(){
+                    {components[0]}
+                }));
+                components.Add(6, new Component(6, true, new List<Component>(){
+                    {components[0]},
+                    {components[3]}
+                }));
+                //End TestData
+
                 nextStateType = StateType.Standard;
                 storedStandard = new Standard();
                 storedObstructon = new Obstruction();
                 storedDetection = new Detection();
                 storedIdle = new Idle();
                 scheduler = new Scheduler();
+
+
                 report = new ReportManager();
 
 
                 Thread behaviorLoop = new Thread(new ThreadStart(BehaviorLoop));
                 behaviorLoop.Start();
 
-
                 parser(null);
             }
 
             static void parser(string[] args)
             {
-                QueueCommand("nav waypoint add 0 0 0 1");
-                QueueCommand("nav waypoint add 3 0 4 2");
-                QueueCommand("nav waypoint add 2 1 1 1");
+                //Test Data
+                Driver.QueueCommand("nav waypoint add 0 0 0 1");
+                Driver.QueueCommand("nav waypoint add 3 0 4 2");
+                Driver.QueueCommand("nav waypoint add 2 1 1 1");
+                //End Test Data
 
                 while (true)
                 {
-                    string temp = Console.ReadLine();
-                    QueueCommand(temp);
-
-
                     int i = 0;
-
-
                     while (unexecutedCommands.Count() > 0)
                     {
                         try
                         {
+                            Console.WriteLine();
                             string command = unexecutedCommands.Dequeue();
                             Parser.InterpretCommand(command);
                         }
@@ -96,7 +104,12 @@ namespace ASP
                             Console.Error.WriteLine();
                         };
                     }
-                    
+
+                    string temp = Console.ReadLine();
+                    QueueCommand(temp);
+
+
+
                 }
             }
 
@@ -106,23 +119,6 @@ namespace ASP
             }
 
 
-
-            public static void ContaminantUpdate(Material contaminant)
-            {
-                storedDetection.ContaminantUpdate(contaminant);
-
-            }
-
-            public static void DiagnosticRoutine()
-            {
-
-            }
-
-            public static Waypoint CurrentWaypoint()
-            {
-                return storedStandard.pathfinding.Goal;
-            }
-          
             public static void BehaviorLoop() //something related behavior
             {
                 /*
@@ -168,15 +164,16 @@ namespace ASP
 
                 while (true)
                 {
+                    if (forcedState != StateType.None && forcedState != currentStateType)
+                        CheckState();
 
-                    if ( currentStateType != nextStateType)
+                    if (currentStateType != nextStateType)
                         switchState(nextStateType);
                     else
                     {
-                        if(currentState!=null)
+                        if (currentState != null)
                             currentState.Cycle();
-                        else
-                            Console.WriteLine("DRIVER -> MNM Idle ");
+
                     }
                 }
 
@@ -205,14 +202,15 @@ namespace ASP
 
             public static void CheckState()
             {
-
+                bool forced = false;
                 if (forcedState != StateType.None)
                 {
-                    
+
                     if (GetStateFromStateType(forcedState).Ready())
                     {
                         Console.WriteLine("DRIVER Forced State");
                         nextStateType = forcedState;
+                        forced = true;
                     }
                     else
                     {
@@ -220,8 +218,8 @@ namespace ASP
                         forcedState = StateType.None;
                     }
                 }
-                
-                else
+
+               if(!forced)
                 {
 
                     if (storedDetection.Ready() && !storedObstructon.Ready())
@@ -237,7 +235,7 @@ namespace ASP
                     else if (storedObstructon.Ready() && storedDetection.Ready())
                     {
                         Console.WriteLine("DRIVER -> IC Detection/Obstruction Conflict.");
-                        nextStateType = StateType.Idle;
+                        ForceIdleState();
                     }
                     else
                     {
@@ -245,22 +243,23 @@ namespace ASP
                         nextStateType = StateType.Standard;
                     }
                 }
-                
+
             }
+
+
 
             public static void ForceObstructionState()
             {
                 forcedState = StateType.Obstruction;
-                CheckState();
             }
 
-            public static void Stop()
+            public static void ForceIdleState()
             {
                 forcedState = StateType.Idle;
-                CheckState();
             }
 
-            public static void Move()
+
+            public static void RemoveForcedState()
             {
                 forcedState = StateType.None;
                 CheckState();
@@ -294,10 +293,10 @@ namespace ASP
                     else
                     {
                         currentState = storedIdle;
-                        if(forcedState == StateType.Idle)
-                            storedIdle.Start(true);
+                        if (forcedState == StateType.Idle)
+                            storedIdle.Start(10);
                         else
-                            storedIdle.Start(false);
+                            storedIdle.Start();
 
                         currentStateType = StateType.Idle;
                     }
@@ -308,7 +307,7 @@ namespace ASP
                 }
 
             }
- 
+
         }
     }
 }

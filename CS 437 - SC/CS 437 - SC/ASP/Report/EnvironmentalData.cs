@@ -3,6 +3,7 @@ using ASP.General;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ASP.Test;
 
 
 namespace ASP
@@ -18,7 +19,7 @@ namespace ASP
             private double temperature;
             private double radiationLevel;
             private double lightIntensity;
-            private double pH;
+            private double ph;
 
             private int waypoint;
             private LocationTime timeLocation;
@@ -38,7 +39,8 @@ namespace ASP
             }
             public double Temperature
             {
-                get { return Temperature; }
+
+                get { return temperature; }
             }
             public double RadiationLevel
             {
@@ -52,24 +54,55 @@ namespace ASP
             {
                 get { return waypoint; }
             }
+
+            public double pH
+            {
+                get { return ph; }
+            }
             public LocationTime TimeLocation
             {
-                get { return TimeLocation; }
+                get { return timeLocation; }
             }
 
 
             public EnvironmentalData(double pressure, double temperature, double radiationLevel,
-                double lightIntensity, int waypoint, double conductivity, double pH, Waypoint coords, Material[] materials)
+                double lightIntensity,  double conductivity, double pH, Waypoint coords, Material[] materials)
             {
                 this.conductivity = conductivity;
                 this.pressure = pressure;
                 this.temperature = temperature;
                 this.radiationLevel = radiationLevel;
                 this.lightIntensity = lightIntensity;
-                this.waypoint = waypoint;
+                this.waypoint = coords.getId();
                 this.timeLocation = new LocationTime(coords.getVector3());
                 this.materials = materials;
-                this.pH = pH;
+                this.ph = pH;
+            }
+            public EnvironmentalData(Waypoint coords)
+            {
+                this.conductivity = DataGenerator.Sensors.getConductivity();
+                this.pressure = DataGenerator.Sensors.getPressure();
+                this.temperature = DataGenerator.Sensors.getTemp();
+                this.radiationLevel = DataGenerator.Sensors.getRadiation();
+                this.lightIntensity = DataGenerator.Sensors.getLight();
+                this.waypoint = coords.getId();
+                this.timeLocation = new LocationTime(coords.getVector3());
+                this.materials = DataGenerator.Sensors.getMaterials();
+                this.ph = DataGenerator.Sensors.getpH();
+            }
+
+            public EnvironmentalData(Waypoint coords, Material contaminant)
+            {
+                this.conductivity = DataGenerator.Sensors.getConductivity();
+                this.pressure = DataGenerator.Sensors.getPressure();
+                this.temperature = DataGenerator.Sensors.getTemp();
+                this.radiationLevel = DataGenerator.Sensors.getRadiation();
+                this.lightIntensity = DataGenerator.Sensors.getLight();
+                this.waypoint = coords.getId();
+                this.timeLocation = new LocationTime(coords.getVector3());
+
+                this.materials = DataGenerator.Sensors.getMaterials(contaminant);
+                this.ph = DataGenerator.Sensors.getpH();
             }
 
         }

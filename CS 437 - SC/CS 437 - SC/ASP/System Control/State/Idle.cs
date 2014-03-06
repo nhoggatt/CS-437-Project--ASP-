@@ -16,62 +16,47 @@ namespace ASP
                 int waitTime = 5;
 
                 DateTime startPoint;
-                bool locked;
+                bool ready = true;
                 int timeWaited = 0;
                 override public void Cycle()
                 {
 
                     TimeSpan temp = Driver.locationTime.Time - startPoint;
                     timeWaited = temp.Seconds;
-                    if (locked)
-                    {
 
+                    if (timeWaited > waitTime)
+                    {
+                        Console.WriteLine("DRIVER:IDLE -> Idle cycle complete. ");
+                        Driver.storedObstructon.DoneExploring();
+                        Stop();
                     }
-                    else
-                        if (timeWaited > waitTime)
-                        {
-                            Console.WriteLine("DRIVER:IDLE -> Idle cycle complete. ");
-                            Stop();
-                        }
                 }
 
                 override public void Start()
                 {
 
-                    Console.WriteLine("DRIVER:IDLE -> MNM  Idle");
-                    startPoint = Driver.locationTime.Time;
-                    timeWaited = 0;
+
+                    Start(5);
                 }
                 public void Start(int time)
                 {
 
                     waitTime = time;
-                    Console.WriteLine("DRIVER:IDLE -> MNM  Idle");
+                    Console.WriteLine("DRIVER:IDLE -> MNM  Idle for "+time+" seconds.");
                     startPoint = Driver.locationTime.Time;
+                    ready = false;
                     timeWaited = 0;
-                }
-
-                public void Start(bool val)
-                {
-                    if (val)
-                    {
-                        Console.WriteLine("DRIVER:IDLE-> MNM  Idle");
-                        locked = true;
-                    }
-                    else
-                        Start();
-                   
                 }
 
                 override public void Stop()
                 {
-                    locked = false;
-                    Driver.CheckState();
+                    Driver.RemoveForcedState();
+                    ready = true;
                 }
 
                 override public bool Ready()
                 {
-                    if (timeWaited > waitTime)
+                    if (!ready)
                     {
                         return false;
                     }

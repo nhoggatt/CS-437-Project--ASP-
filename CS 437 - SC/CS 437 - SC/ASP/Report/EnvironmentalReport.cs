@@ -12,6 +12,14 @@ namespace ASP {
 
             private List<EnvironmentalData> envData = new List<EnvironmentalData>();
 
+            public List<EnvironmentalData> Data
+            {
+                get { return envData; }
+            }
+
+            public EnvironmentalReport()
+            {
+            }
             public EnvironmentalReport(EnvironmentalData data)
             {
                 Add(data);

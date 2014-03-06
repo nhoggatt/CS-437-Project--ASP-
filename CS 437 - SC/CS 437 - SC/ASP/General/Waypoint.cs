@@ -10,17 +10,18 @@ public class Waypoint
     private double radius;
     private Vector3 coords;
 
-    public Waypoint(double x, double y, double z, double radius)
+    public Waypoint(int id, double x, double y, double z, double radius)
     {
         coords = new Vector3(x,y,z);
 
+        this.id = id;
         this.radius = radius;
     }
 
-    public Waypoint(General.Vector3 coords, double radius)
+    public Waypoint(int id, General.Vector3 coords, double radius)
     {
         this.coords = coords ;
-
+        this.id = id;
         this.radius = radius;
     }
 

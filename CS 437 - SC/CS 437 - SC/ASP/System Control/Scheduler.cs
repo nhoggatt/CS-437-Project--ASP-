@@ -9,6 +9,7 @@ namespace ASP.SystemControl
 {
     class Scheduler
     {
+        
         DateTime startTime;
         long envDataLifetime;
         bool expirationStart;
@@ -28,8 +29,9 @@ namespace ASP.SystemControl
             get { return envDataLifetime; }
             set
             {
-                Console.WriteLine("DRIVER:SCHEDULER -> ER New lifetime duration: " + value); expirationStart = false; envDataLifetime = value;
-                startTime = Driver.locationTime.Time; ;
+                Console.WriteLine("DRIVER:SCHEDULER -> ER New data lifetime duration: " + value); startTime = Driver.locationTime.Time; 
+                envDataLifetime = value; expirationStart = false; 
+                
             }
         }
         public long Maintenance
@@ -63,9 +65,9 @@ namespace ASP.SystemControl
             startTime = Driver.locationTime.Time;
             EnvironmentalDataLifetime = 30;
 
-            frequency[0] = 5;
-            frequency[1] = 15;
-            frequency[2] = 30;
+            frequency[0] = 10;
+            frequency[1] = 30;
+            frequency[2] = 60;
 
             lastReport[0] = Driver.locationTime.Time;
             lastReport[1] = Driver.locationTime.Time;
@@ -108,7 +110,7 @@ namespace ASP.SystemControl
                         //Driver send report.
                         Console.WriteLine("DRIVER:SCHEDULER Time to send " + reportName[i] + " report.");
 
-                        Driver.report.SendReport(i);
+                        Driver.report.reports[reportName[i]]();
                         lastReport[i] = Driver.locationTime.Time;
                     }
                 }
@@ -120,6 +122,7 @@ namespace ASP.SystemControl
                 if (temp.TotalSeconds >= envDataLifetime && !expirationStart)
                 {
                     Console.WriteLine("DRIVER:SCHEDULER ER has begun deleting old data.");
+
                     expirationStart = true;
                 }
 
