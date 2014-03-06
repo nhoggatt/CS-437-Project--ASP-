@@ -30,7 +30,10 @@ namespace ASP
                     {
                         if (currentContaminant == null)
                         {
-                            currentContaminant = mat;
+                            if (!recentContaminants.Contains(mat.Id))
+                                currentContaminant = mat;
+                            else
+                                Console.WriteLine("DRIVER:DETECTION Contaminant already detected.");
                         }
 
                         else if (mat.Id == currentContaminant.Id)
@@ -126,6 +129,7 @@ namespace ASP
                 override public void Stop()
                 {
                     currentCyclePosition = null;
+                    Driver.CheckState();
                 }
 
                 //Called when reaching a new waypoint.

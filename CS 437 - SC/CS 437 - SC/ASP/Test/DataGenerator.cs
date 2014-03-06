@@ -22,7 +22,7 @@ namespace ASP.Test
         for (int i = 0; i < materials; i++)
         {
             int contam = foundContaminant();
-            mat[i] = new Material(i,contam!=0, contam, contamAmount());
+            mat[i] = new Material(generator.Next(1000), contam != 0, contam, contamAmount());
         }
         return mat;
     }
@@ -67,7 +67,7 @@ namespace ASP.Test
 	}
 	
 	public static int foundContaminant(){
-        bool foundSomething = generator.Next(10) == 1 ? true : false; 
+        bool foundSomething = generator.Next(5) == 1 ? true : false; 
 		if(foundSomething){
 			return generator.Next(13)+1;
 		}

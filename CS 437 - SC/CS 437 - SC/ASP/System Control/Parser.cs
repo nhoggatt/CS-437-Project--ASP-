@@ -103,8 +103,6 @@ namespace ASP
 
                 }
 
-
-
             }
             private static void Report(string args)
             {
@@ -225,11 +223,11 @@ namespace ASP
                 else if (argsToArray.Length == 5 && argsToArray[0] == "contaminant")
                 {
 
+                    Console.WriteLine("TEST Contaminant created.");
                     Driver.storedDetection.ContaminantUpdate(new Material(Int32.Parse(argsToArray[1]),
                          argsToArray[2] == "true",
                          Int32.Parse(argsToArray[3]),
                          Double.Parse(argsToArray[4])));
-                    Console.WriteLine("TEST Contaminant created.");
                 }
                 else if (argsToArray.Length > 1 && argsToArray[0] == "report")
                 {
