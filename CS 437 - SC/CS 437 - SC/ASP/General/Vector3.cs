@@ -42,6 +42,11 @@ namespace ASP
                 return Math.Sqrt(Math.Pow(x - other.x, 2) + Math.Pow(y - other.y, 2) + Math.Pow(z - other.z, 2));
             }
 
+            public override string ToString()
+            {
+                return "x: "+x+" y:"+y+" z: "+z;
+            }
+
         }
     }
 }

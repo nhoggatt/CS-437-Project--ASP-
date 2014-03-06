@@ -53,8 +53,8 @@ namespace ASP.Report
 
         private static string status(AbstractReport type)
         {
-            return "id " + type.Current.Waypoint_Id + "\n Location " + location(type.Current.Location)
-                        + "\n Datetime" + type.Current.DateTime;
+            return "id " + type.Current.Waypoint_Id + "\n Location: " + location(type.Current.Location)
+                        + "\n Datetime: " + type.Current.DateTime;
         }
         private static void SendReport(int type)
         {
@@ -86,7 +86,7 @@ namespace ASP.Report
                         {
                             Console.WriteLine("\n   Materials");
                              Console.WriteLine("\n    id: " + mat.Id + "\n    contaminant: " + mat.Contaminant + "\n    Threat Level: " + mat.ThreatLevel+
-                                 "\n    Concentration:"+mat.Concentration);
+                                 "\n    Concentration: "+mat.Concentration);
                         }
                     }
                     Console.WriteLine(" "+status(currentEnvironmentalReport));

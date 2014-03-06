@@ -41,6 +41,11 @@ namespace ASP
                 this.waypoint_id = Driver.storedStandard.pathfinding.Goal.getId();
             }
 
+            public override string ToString()
+            {
+                return location + " " + dateTime;
+            }
+
 
             /*
              * 3) [Short Report] send locational data + time to IC to transmit 

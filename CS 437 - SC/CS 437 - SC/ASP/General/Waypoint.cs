@@ -74,6 +74,11 @@ public class Waypoint
         coords.Z = z;
     }
 
+    public override string ToString()
+    {
+        return "id: "+id+" x: "+coords.X + " y: " + coords.Y + " z: " + coords.Z;
+    }
+
 }
 }
 }
