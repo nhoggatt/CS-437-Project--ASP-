@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ASP.SystemControl;
+using ASP.General;
 
 namespace ASP.Report
 {

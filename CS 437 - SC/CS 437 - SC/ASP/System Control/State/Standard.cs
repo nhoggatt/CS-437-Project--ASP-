@@ -126,8 +126,6 @@ namespace ASP
 
                 override public void Start()
                 {
-                    
-                    Console.WriteLine(Driver.storedWaypoints.ListWaypoints().Count);
 
                     if (pathfinding == null)
                     {

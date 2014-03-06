@@ -36,27 +36,22 @@ namespace ASP
 
 
             public static WaypointManager storedWaypoints = new WaypointManager();
+            public static ComponentManager storedComponents = new ComponentManager();
 
-            public static Dictionary<int, Component> components = new Dictionary<int, Component>() 
-            {
-            {0, new Component(0)}, //ER
-            {1, new Component(1)}, //IC
-            {2, new Component(2)}, //IC
-            {3, new Component(3, false)}, // Temperature Sensor
-            {4, new Component(4)} // Motor 
-            };
 
             public Driver()
             {
 
                 //TestData
-                components.Add(5, new Component(5, true, new List<Component>(){
-                    {components[0]}
-                }));
-                components.Add(6, new Component(6, true, new List<Component>(){
-                    {components[0]},
-                    {components[3]}
-                }));
+                storedComponents.AddComponent();
+                storedComponents.AddComponent();
+                storedComponents.AddComponent();
+                storedComponents.AddComponent(false);
+                storedComponents.AddComponent();
+                storedComponents.AddComponent();
+                storedComponents.AddDependency(5, 0);
+                storedComponents.AddDependency(4, 3);
+                
                 //End TestData
 
                 nextStateType = StateType.Standard;
@@ -72,7 +67,8 @@ namespace ASP
 
                 Thread behaviorLoop = new Thread(new ThreadStart(BehaviorLoop));
                 behaviorLoop.Start();
-
+                
+                
                 parser(null);
             }
 
@@ -121,47 +117,6 @@ namespace ASP
 
             public static void BehaviorLoop() //something related behavior
             {
-                /*
-                     * Standard Mode 
-                     * 
-                     * Upon receiving waypoints, and started up, SC will plot the best route between all waypoints. The path does not take
-                     * into account obstructions found along the way, but it does take into account obstructions listed by the user.
-                     * The SC DOES NOT CONTROL THE MOVEMENT, IT JUST SETS THE DESTINATION. IT MAKES A DECISION AND SAYS "MNM, DO STUFF" 
-                     * AND IT HAPPENS. It says "Going left is safe" or "Halt", mnm uses that information to perform correctly.
-                     * MNM is not a pseudo module and extension of SC. No, MNM handles all short term (immediate) movement options. 
-                     * SC handles plotting the current direction and goal destination. 
-                     * 
-                     * 1) If not in proximity of goal waypoint, continue on toward goal waypoint. 
-                     * 2) If in proximity of goal waypoint, traverse around point. 
-                     * 3) If done exploring the point, move on to next point.
-                     * 
-                     * ---
-                     * Detection Mode
-                     * 
-                     * 1) Switches to this mode when ER finds a threat. It makes that threat its current "target". 
-                     * 2) Will move closer to areas that have higher concentration.
-                     * 3) Upon finding area with higher concentration, will path around it.
-                     * 4) If it finds area with higher concentration, it will return to step 3.
-                     * 
-                     * ---
-                     * Obstruction Mode
-                     * 
-                     * 1) Upon detecting an "obstruction". Will send request to user to determine what to do next.
-                     *      a) If procede, then the probe will 
-                     *          a) navigate around the obstruction, and using scanners to gather info.
-                     *      b) If Ignore, the probe will ignore the obstruction.
-                     *      c) Not responding is same as ignoring.
-                     * 2) After gathering Info, the probe will continue on as normal.
-                     * 
-                     * ---
-                     * Special Case
-                     * 
-                     * Obstruction + Detection 
-                     * 
-                     * 1) User gets choice, as if obstruction.
-                     * 2) If use does not respond, defaults to detection.
-                     */
-
                 while (true)
                 {
                     if (forcedState != StateType.None && forcedState != currentStateType)

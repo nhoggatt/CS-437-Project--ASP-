@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace ASP
 {
-    namespace SystemControl
+    namespace General
     {
         public class Component
         {
             private int component_id;
             private bool functional;
-            private List<Component> componentDependencies;
+            private List<Component> componentDependencies = new List<Component>();
 
             public int Component_id
             {
@@ -23,12 +23,19 @@ namespace ASP
             {
                 get {
                     if (functional && componentDependencies == null)
+                    {
                         return true;
-                    else if(functional && functionDependencies())
+                    }
+                    else if (functional && functionDependencies())
+                    {
                         return true;
-                    else 
+                    }
+                    else
+                    {
                         return false;
+                    }
                 }
+                set { functional = value; }
             }
 
             private bool functionDependencies()
@@ -43,10 +50,10 @@ namespace ASP
 
             public bool AddDependency(Component component)
             {
-                foreach(Component comp in component.componentDependencies)
-                    if (comp==this)
-                        return false;
-
+                if(component.componentDependencies!=null)
+                    foreach(Component comp in component.componentDependencies)
+                        if (comp==this || component == this)
+                            return false;
                 componentDependencies.Add(component);
                 return true;
 
@@ -61,8 +68,15 @@ namespace ASP
             public Component(int component_id, bool functional = true, List<Component> children = null)
             {
                 this.component_id = component_id;
-                this.functional = functional;
-                this.componentDependencies = children;
+                this.Functional = functional;
+                if(children!=null)
+                    this.componentDependencies = children;
+
+            }
+
+            public void Status()
+            {
+                Console.WriteLine("COMPONENT " + component_id + " " + (Functional ? "is functioning." : "is broken."));
             }
         }
     }

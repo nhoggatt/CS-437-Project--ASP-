@@ -28,7 +28,7 @@ namespace ASP
             public DiagnosticData()
             {
                 power = retrievePower();
-                status = Driver.components.Values.ToArray();
+                status = Driver.storedComponents.ListComponent().ToArray();
             }
 
             private double retrievePower()

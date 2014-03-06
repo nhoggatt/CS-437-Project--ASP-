@@ -185,43 +185,68 @@ namespace ASP
                 //test report obstruction [int]
                 Random ran = new Random();
                 string[] argsToArray = args.Split(' ');
+                
+                if (argsToArray.Length == 2 && argsToArray[0] == "component")
+                {
+                    if (argsToArray[1] == "list")
+                    {
+                        var temp = Driver.storedComponents.ListComponent();
+                        Console.WriteLine(temp.Count);
+                        foreach (Component comp in temp)
+                        {
+                            comp.Status();
 
-                if (argsToArray.Length == 4 && argsToArray[0] == "location")
+                            for (int i = 0; i < comp.ComponentDependencies.Count; i++)
+                            {
+                                Console.Write(" ");
+                                comp.ComponentDependencies[i].Status();
+                            }
+                              
+                        }
+                    }
+                    else
+                    {
+                        Driver.storedComponents.ListComponent()[Int32.Parse(argsToArray[1])].Functional =
+                            Driver.storedComponents.ListComponent()[Int32.Parse(argsToArray[1])].Functional == true ? false : true;
+                    }
+
+                }
+                else if (argsToArray.Length == 4 && argsToArray[0] == "location")
                 {
                     Driver.locationTime.UpdatePosition(Double.Parse(argsToArray[1]), Double.Parse(argsToArray[2]), Double.Parse(argsToArray[3]));
-                    
+
                 }
                 else if (argsToArray.Length == 2 && argsToArray[0] == "waypoint")
                 {
                     int temp = Int32.Parse(argsToArray[1]);
                     Driver.storedStandard.pathfinding.Goal = Driver.storedWaypoints.ListWaypoints()
-                        [temp<Driver.storedWaypoints.ListWaypoints().Count ? temp : 0];
-                } 
-               else if (argsToArray.Length == 5 && argsToArray[0] == "contaminant")
-                    {
-                        
-                        Driver.storedDetection.ContaminantUpdate(new Material(Int32.Parse(argsToArray[1]),
-                             argsToArray[2] == "true",
-                             Int32.Parse(argsToArray[3]),
-                             Double.Parse(argsToArray[4])));
-                        Console.WriteLine("TEST Contaminant created.");
-                    }
-                    else if (argsToArray.Length > 1 && argsToArray[0] == "report")
+                        [temp < Driver.storedWaypoints.ListWaypoints().Count ? temp : 0];
+                }
+                else if (argsToArray.Length == 5 && argsToArray[0] == "contaminant")
                 {
-                     if (argsToArray[1] == "environmental" && argsToArray.Length == 3)
+
+                    Driver.storedDetection.ContaminantUpdate(new Material(Int32.Parse(argsToArray[1]),
+                         argsToArray[2] == "true",
+                         Int32.Parse(argsToArray[3]),
+                         Double.Parse(argsToArray[4])));
+                    Console.WriteLine("TEST Contaminant created.");
+                }
+                else if (argsToArray.Length > 1 && argsToArray[0] == "report")
+                {
+                    if (argsToArray[1] == "environmental" && argsToArray.Length == 3)
                     {
                         Console.WriteLine("TEST Environmental data created.");
                         int reports = Int32.Parse(argsToArray[2]);
                         for (int i = 0; i < reports; i++)
                         {
-                            Driver.report.AddToEnvironmentalReportData(new EnvironmentalData(Driver.storedStandard.pathfinding.Goal));                 
+                            Driver.report.AddToEnvironmentalReportData(new EnvironmentalData(Driver.storedStandard.pathfinding.Goal));
                         }
 
                     }
                     else if (argsToArray[1] == "obstruction" && argsToArray.Length == 2)
                     {
                         Console.WriteLine("TEST Obstruction created.");
-                            Driver.storedObstructon.FoundObstruction();
+                        Driver.storedObstructon.FoundObstruction();
                     }
                 }
 

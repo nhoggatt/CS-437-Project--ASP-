@@ -47,7 +47,8 @@
     <Compile Include="ASP\Report\DiagnosticData.cs" />
     <Compile Include="ASP\Report\ObstructionReport.cs" />
     <Compile Include="ASP\Report\ReportManager.cs" />
-    <Compile Include="ASP\System Control\Component.cs" />
+    <Compile Include="ASP\System Control\Component\Component.cs" />
+    <Compile Include="ASP\System Control\Component\ComponentManager.cs" />
     <Compile Include="ASP\System Control\Scheduler.cs" />
     <Compile Include="ASP\System Control\State\Detection.cs" />
     <Compile Include="ASP\System Control\State\Idle.cs" />

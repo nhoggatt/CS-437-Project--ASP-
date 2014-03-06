@@ -19,7 +19,6 @@ namespace ASP
                 {
                     
                 }
-                //Console.WriteLine("Entering Lock");
                 
             }
             void LockOut()
@@ -28,7 +27,6 @@ namespace ASP
 
                 Interlocked.Exchange(ref checkedValue, 0);
                 
-                //Console.WriteLine("Exiting Lock");
 
 
             }
